@@ -21,6 +21,13 @@ events = [
 def get_events():
     return jsonify([event.to_dict() for event in events]), 200
 
+@app.route("/events/<int:id>", methods=["GET"])
+def get_event(id):
+    event = next((event for event in events if event.id == id), None)
+    if not event:
+        return jsonify("Event not found"), 404
+    return jsonify(event.to_dict()), 200
+
 # TODO: Task 1 - Define the Problem
 # Create a new event from JSON input
 @app.route("/events", methods=["POST"])
