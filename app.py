@@ -22,6 +22,9 @@ events = [
 @app.route("/events", methods=["POST"])
 def create_event():
     # TODO: Task 2 - Design and Develop the Code
+    data = request.get_json()
+    new_id = max((event.id for event in events)) + 1
+    new_event = Event(id=new_id, title=data["title"])
 
     # TODO: Task 3 - Implement the Loop and Process Each Element
 
