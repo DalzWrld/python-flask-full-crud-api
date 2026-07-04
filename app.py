@@ -23,8 +23,10 @@ events = [
 def create_event():
     # TODO: Task 2 - Design and Develop the Code
     data = request.get_json()
-    new_id = max((event.id for event in events)) + 1
+    new_id = max((event.id for event in events)) + 1 if events else 1
     new_event = Event(id=new_id, title=data["title"])
+    events.append(new_event)
+    return jsonify(new_event.to_dict()), 201
 
     # TODO: Task 3 - Implement the Loop and Process Each Element
 
