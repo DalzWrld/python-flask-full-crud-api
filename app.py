@@ -34,9 +34,9 @@ def create_event():
 # TODO: Task 1 - Define the Problem
 # Update the title of an existing event
 @app.route("/events/<int:event_id>", methods=["PATCH"])
-def update_event(event_id):
+def update_event(id):
     data = request.get_json()
-    event = next((event for event in events if event.id == event_id), None)
+    event = next((event for event in events if event.id == id), None)
     if not event:
         return jsonify({"error": "Event not found"}), 404
     event.title = data.get("title", event.title)
@@ -45,12 +45,12 @@ def update_event(event_id):
 # TODO: Task 1 - Define the Problem
 # Remove an event from the list
 @app.route("/events/<int:event_id>", methods=["DELETE"])
-def delete_event(event_id):
+def delete_event(id):
     global events
-    event = next((event for event in events if event.id == event_id), None)
+    event = next((event for event in events if event.id == id), None)
     if not event:
         return jsonify({"error": "Event not found"}), 404
-    events = [e for e in events if e.id != event_id]
+    events = [e for e in events if e.id != id]
     return jsonify({"message": "Event deleted"}), 200
 
 if __name__ == "__main__":
