@@ -33,7 +33,7 @@ def create_event():
 def update_event(event_id):
     data = request.get_json()
     event = next((event for event in events if event.id == event_id), None)
-    if event is None:
+    if not event:
         return jsonify({"error": "Event not found"}), 404
     event.title = data.get("title", event.title)
     return jsonify(event.to_dict()), 200
@@ -42,12 +42,12 @@ def update_event(event_id):
 # Remove an event from the list
 @app.route("/events/<int:event_id>", methods=["DELETE"])
 def delete_event(event_id):
-    # TODO: Task 2 - Design and Develop the Code
-
-    # TODO: Task 3 - Implement the Loop and Process Each Element
-
-    # TODO: Task 4 - Return and Handle Results
-    pass
+    global events
+    event = next((event for event in events if event.id == event_id), None)
+    if not event:
+        return jsonify({"error": "Event not found"}), 404
+    events = [e for e in events if e.id != event_id]
+    return jsonify({"message": "Event deleted"}), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
